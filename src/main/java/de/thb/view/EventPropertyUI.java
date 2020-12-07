@@ -73,7 +73,6 @@ public class EventPropertyUI extends JPanel implements ActionListener, FocusList
 		button.addActionListener(e -> {
 			getHighLight();
 		});
-		
 		return button;
 	}
 
