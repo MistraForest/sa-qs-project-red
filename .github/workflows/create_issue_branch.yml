@@ -1,0 +1,23 @@
+  
+# This workflow will triage pull requests and apply a label based on the
+# paths that are modified in the pull request.
+#
+# To use this workflow, you will need to set up a .github/labeler.yml
+# file with configuration.  For more information, see:
+# https://github.com/marketplace/actions/create-issue-branch
+
+name: create_issue_branch
+on:
+    issues:
+        types: [assigned]
+    issue_comment:
+        types: [created]
+
+jobs:
+    create_issue_branch_job:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Create Issue Branch
+          uses: robvanderleek/create-issue-branch@master
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
