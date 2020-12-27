@@ -58,11 +58,11 @@ public class EventService implements EventServiceInterface {
     private void initialize() {
         events = new HashMap<String, Event>();
         String[][] data = {
-                {"Kim Larson Concert", "2000", "2020 12 31"},
-                {"Symposium on Math", "50", "2021 01 06"},
-                {"Cph Museum open day", "400", "2020 02 25"}
+                {"Kim Larson Concert", "2000", "2020/12/31 10:30"},
+                {"Symposium on Math", "50", "2021/01/06 15:45"},
+                {"Cph Museum open day", "400", "2020/02/25 09:30"}
         };
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd H:m");
         for (String[] eventData : data) {
             try {
                 Event event = new Event(
