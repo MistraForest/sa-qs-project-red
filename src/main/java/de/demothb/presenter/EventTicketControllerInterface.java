@@ -8,7 +8,7 @@ public interface EventTicketControllerInterface extends PropertyChangeListener {
 
     void ticketQuantityChanged(int quantity);
 
-    void purchaseTicket();
+    void purchaseTicket(String eventId, int quantity);
 
     //void highlightAvailability();
 

@@ -5,9 +5,10 @@ public enum PropertyChangeConstants {
     EVENT_SELECTED("eventSelected"),
     QUANTITY_CHANGED("ticketQuantityChanged"),
     PURCHASE_TICKET("purchaseTicket"),
-    EVENT_AVAILABILITY("availabilityChanged");
+    EVENT_AVAILABILITY("availabilityChanged"),
+    NEW_EVENT_ADDED("newEventAdded");
 
-    private final String propertyName;
+    private String propertyName;
 
     PropertyChangeConstants(String propertyName) {
         this.propertyName = propertyName;
