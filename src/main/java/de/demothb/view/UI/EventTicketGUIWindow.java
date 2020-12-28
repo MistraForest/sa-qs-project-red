@@ -122,8 +122,6 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
                     public void actionPerformed(ActionEvent e) {
                         // Fire Purchase Event
                         Integer quantity = ((Integer) quantityField.getValue());
-                        System.out.println("actionPerformed");
-                        System.out.println(quantity.intValue());
                         if (currentEvent != null && quantity.intValue() > 0) {
                             System.out.println("event fired");
                             support.firePropertyChange(
@@ -134,10 +132,6 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
                                             quantity
                                     )
                             );
-                            System.out.println("event fired");
-                            for (PropertyChangeListener pcl:support.getPropertyChangeListeners()) {
-                                System.out.println(pcl.getClass());
-                            }
                         }
                     }
                 }
@@ -146,6 +140,7 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
 
     private void initializeEventListBox() {
         eventListBox = new EventListUI();
+        eventListBox.setName("Event list");
         eventListBox.addListSelectionListener(
                 new ListSelectionListener() {
                     @Override
@@ -161,36 +156,38 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
 
     private void layoutAndWireUp(){
         //Lay out the labels in a panel.
-        JPanel labelPane = new JPanel(new GridLayout(0,1));
+        JPanel labelPane = new JPanel(new GridLayout(0,1, 5, 11));
         labelPane.add(eventNameLabel);
         labelPane.add(dateLabel);
         labelPane.add(availabilityLabel);
         labelPane.add(quantityLabel);
         labelPane.add(eventIdLabel);
+        labelPane.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
 
         //Layout the text fields in a panel.
-        JPanel fieldPane = new JPanel(new GridLayout(0,1));
+        JPanel fieldPane = new JPanel(new GridLayout(0,1, 0, 2));
         fieldPane.add(eventNameField);
         fieldPane.add(dateField);
         fieldPane.add(availabilityField);
         fieldPane.add(quantityField);
         fieldPane.add(eventIdField);
+        fieldPane.add(purchaseButton);
+        fieldPane.setBorder(BorderFactory.createEmptyBorder(25, 20, 20, 20));
         
         //Layout the list box in a panel.
-        //JPanel listPane = new JPanel(new GridLayout(0,1));
+        JPanel listPane = new JPanel(new GridLayout(0,1, 0, 10));
         JScrollPane listScroller = new JScrollPane(eventListBox);
-        listScroller.setPreferredSize(new Dimension(250, 80));
-        //listPane.add(listScroller);
+        listScroller.setPreferredSize(new Dimension(180, 125));
+        listPane.add(listScroller);
+        listPane.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
 
         //Put the panels in this panel, labels on left,
         //text fields on right.
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        //add(listPane, BorderLayout.LINE_START);
-        add(listScroller, BorderLayout.LINE_START);
+        add(listPane, BorderLayout.LINE_START);
         add(labelPane, BorderLayout.CENTER);
         add(fieldPane, BorderLayout.LINE_END);
-        add(purchaseButton, BorderLayout.PAGE_END);
-        setPreferredSize((new Dimension(600, 400)));
+        //setPreferredSize((new Dimension(600, 400)));
         //setContentPane(mainPane);
     }
 
@@ -245,7 +242,6 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
         }
         if (source == quantityField) {
             if (((Integer) quantityField.getValue()).intValue() > 0) {
-                System.out.println(((Integer) quantityField.getValue()).intValue());
                 enableTicketPurchase(true);
             }
         }
@@ -308,7 +304,6 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
     @Override
     public void subscribe(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
-        System.out.println("Register listener:" + pcl.getClass().getName());
     }
 
     @Override

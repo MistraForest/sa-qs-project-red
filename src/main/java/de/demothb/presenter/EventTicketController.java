@@ -40,7 +40,7 @@ public class EventTicketController implements EventTicketControllerInterface {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Called propertyChange");
+        System.out.println("Called propertyChange handler:" + evt.getPropertyName());
         String propName = evt.getPropertyName();
         if (propName.equals(PropertyChangeConstants.EVENT_SELECTED.geName())) {
             eventSelectionChanged((String) evt.getNewValue());
