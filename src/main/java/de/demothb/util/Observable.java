@@ -4,8 +4,8 @@ import java.beans.PropertyChangeListener;
 
 public interface Observable {
 
-    public void addPropertyChangeListener(PropertyChangeListener pcl);
+    public void subscribe(PropertyChangeListener pcl);
 
-    public void removePropertyChangeListener(PropertyChangeListener pcl);
+    public void unsubscribe(PropertyChangeListener pcl);
 
 }

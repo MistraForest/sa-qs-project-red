@@ -1,6 +1,6 @@
 package de.demothb.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Event {
@@ -11,13 +11,13 @@ public class Event {
 
     private String name;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
     private int totalTicket;
 
     private int ticketSold;
 
-    public Event(String name, int totalTicket, LocalDate date) throws Exception {
+    public Event(String name, int totalTicket, LocalDateTime date) throws Exception {
         this.name = name;
         if (totalTicket <= 0){
             throw new Exception("Number of seat must be greater than zero");
@@ -37,7 +37,7 @@ public class Event {
         return name;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 

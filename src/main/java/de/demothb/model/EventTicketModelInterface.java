@@ -6,4 +6,6 @@ public interface EventTicketModelInterface extends Observable {
 
     boolean purchaseTicket(String eventId, int quantity);
 
+    void loadEvents();
+
 }

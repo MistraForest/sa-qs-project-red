@@ -6,6 +6,7 @@ public enum PropertyChangeConstants {
     QUANTITY_CHANGED("ticketQuantityChanged"),
     PURCHASE_TICKET("purchaseTicket"),
     EVENT_AVAILABILITY("availabilityChanged"),
+    EVENT_LIST("newEventAdded"),
     NEW_EVENT_ADDED("newEventAdded");
 
     private String propertyName;

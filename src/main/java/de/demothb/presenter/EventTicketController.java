@@ -38,22 +38,19 @@ public class EventTicketController implements EventTicketControllerInterface {
         }
     }
 
-    /* public void highlightAvailability() {
-        view.highlightAvailability(selectedEventId);
-    }*/
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Called propertyChange");
         String propName = evt.getPropertyName();
-        if (propName == PropertyChangeConstants.EVENT_SELECTED.geName()) {
+        if (propName.equals(PropertyChangeConstants.EVENT_SELECTED.geName())) {
             eventSelectionChanged((String) evt.getNewValue());
             return;
         }
-        if (propName == PropertyChangeConstants.QUANTITY_CHANGED.geName()) {
+        if (propName.equals(PropertyChangeConstants.QUANTITY_CHANGED.geName())) {
             ticketQuantityChanged((int) evt.getNewValue());
             return;
         }
-        if (propName == PropertyChangeConstants.PURCHASE_TICKET.geName()) {
+        if (propName.equals(PropertyChangeConstants.PURCHASE_TICKET.geName())) {
             Event event = (Event) evt.getSource();
             purchaseTicket(event.getId(), ((Integer) evt.getNewValue()).intValue());
         }

@@ -1,12 +1,12 @@
 package de.demothb.model;
 
 import de.demothb.service.EventServiceInterface;
-import de.demothb.util.EventAvailabilityChangeEvent;
 import de.demothb.util.PropertyChangeConstants;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 
 public class EventTicketModel implements EventTicketModelInterface {
 
@@ -34,6 +34,17 @@ public class EventTicketModel implements EventTicketModelInterface {
         return false;
     }
 
+    public void loadEvents() {
+        support.firePropertyChange(
+                new PropertyChangeEvent(
+                        this,
+                        PropertyChangeConstants.EVENT_LIST.geName(),
+                        null,
+                        eventService.getList()
+                )
+        );
+    }
+
     private Boolean isTicketPurchasable(Event event, int quantity) {
         return event.getAvailability() >= quantity;
     }
@@ -50,12 +61,12 @@ public class EventTicketModel implements EventTicketModelInterface {
     }
 
     @Override
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+    public void subscribe(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
     }
 
     @Override
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+    public void unsubscribe(PropertyChangeListener pcl) {
         support.removePropertyChangeListener(pcl);
     }
 

@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class EventService implements EventServiceInterface {
     public Event addEvent() {
         String eventName = RandomStringUtils.randomAlphabetic(10);
         int ticketCount = NumberUtils.toInt(RandomStringUtils.randomNumeric(3));
-        LocalDate localDate = generateRandomLocalDate();
+        LocalDateTime localDate = generateRandomLocalDate();
         try {
             Event event = new Event(eventName, ticketCount, localDate);
             events.put(event.getId(), event);
@@ -62,13 +62,13 @@ public class EventService implements EventServiceInterface {
                 {"Symposium on Math", "50", "2021/01/06 15:45"},
                 {"Cph Museum open day", "400", "2020/02/25 09:30"}
         };
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd H:m");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         for (String[] eventData : data) {
             try {
                 Event event = new Event(
                         eventData[0],
                         Integer.parseInt(eventData[1]),
-                        LocalDate.parse(eventData[2], formatter)
+                        LocalDateTime.parse(eventData[2], formatter)
                 );
                 events.put(event.getId(), event);
             } catch (Exception e) {
@@ -77,7 +77,7 @@ public class EventService implements EventServiceInterface {
         }
     }
 
-    private LocalDate generateRandomLocalDate() {
+    private LocalDateTime generateRandomLocalDate() {
         Date date = new Date();
         int year = NumberUtils.toInt(RandomStringUtils.randomNumeric(1));
         int month = NumberUtils.toInt(RandomStringUtils.random(2, 0, 11, false, true));
@@ -85,9 +85,9 @@ public class EventService implements EventServiceInterface {
         date = DateUtils.addYears(date, year);
         date = DateUtils.addMonths(date, month);
         date = DateUtils.addDays(date, days);
-        LocalDate localDate = date.toInstant()
-                                  .atZone(ZoneId.systemDefault())
-                                  .toLocalDate();
+        LocalDateTime localDate = date.toInstant()
+                                      .atZone(ZoneId.systemDefault())
+                                      .toLocalDateTime();
         return localDate;
     }
 

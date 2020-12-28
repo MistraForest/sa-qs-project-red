@@ -3,11 +3,15 @@ package de.demothb.view.UI;
 import de.demothb.model.Event;
 import javax.swing.*;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class EventListUI extends JList<Event> {
-    
+
+    DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' HH:mm");
+
     public EventListUI(){
         super();
         initializeEventListBox();
@@ -31,7 +35,9 @@ public class EventListUI extends JList<Event> {
             if (value instanceof Event) {
                 Event evt = (Event)value;
                 setText(evt.getName());
-                setToolTipText(evt.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy 'at' H:m")));
+                String text = evt.getDate().format(formatters);
+                System.out.println(text);
+                setToolTipText(text);
             }
             return this;
         }
