@@ -12,10 +12,4 @@ public interface EventTicketViewInterface extends PropertyChangeListener, Observ
 
     void enableTicketPurchase(boolean enable);
 
-    void clearEventSelection();
-
-    void highlightAvailability(String color);
-
-    void clearAvailabilityHighlighting();
-
 }

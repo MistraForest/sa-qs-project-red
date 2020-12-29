@@ -6,7 +6,6 @@ import de.demothb.util.PropertyChangeConstants;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.List;
 
 public class EventTicketModel implements EventTicketModelInterface {
 
@@ -43,6 +42,21 @@ public class EventTicketModel implements EventTicketModelInterface {
                         eventService.getList()
                 )
         );
+    }
+
+    @Override
+    public Event addEvent() {
+        Event event = eventService.generateEvent();
+        eventService.saveEvent(event);
+        support.firePropertyChange(
+                new PropertyChangeEvent(
+                        event,
+                        PropertyChangeConstants.NEW_EVENT_ADDED.geName(),
+                        null,
+                        event
+                )
+        );
+        return event;
     }
 
     private Boolean isTicketPurchasable(Event event, int quantity) {

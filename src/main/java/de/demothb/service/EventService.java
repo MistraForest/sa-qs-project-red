@@ -4,15 +4,10 @@ import de.demothb.model.Event;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class EventService implements EventServiceInterface {
 
@@ -23,14 +18,12 @@ public class EventService implements EventServiceInterface {
     }
 
     @Override
-    public Event addEvent() {
+    public Event generateEvent() {
         String eventName = RandomStringUtils.randomAlphabetic(10);
         int ticketCount = NumberUtils.toInt(RandomStringUtils.randomNumeric(3));
         LocalDateTime localDate = generateRandomLocalDate();
         try {
-            Event event = new Event(eventName, ticketCount, localDate);
-            events.put(event.getId(), event);
-            return event;
+            return new Event(eventName, ticketCount, localDate);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,17 +71,12 @@ public class EventService implements EventServiceInterface {
     }
 
     private LocalDateTime generateRandomLocalDate() {
-        Date date = new Date();
-        int year = NumberUtils.toInt(RandomStringUtils.randomNumeric(1));
-        int month = NumberUtils.toInt(RandomStringUtils.random(2, 0, 11, false, true));
-        int days = NumberUtils.toInt(RandomStringUtils.random(2, 1, 30, false, true));
-        date = DateUtils.addYears(date, year);
-        date = DateUtils.addMonths(date, month);
-        date = DateUtils.addDays(date, days);
-        LocalDateTime localDate = date.toInstant()
-                                      .atZone(ZoneId.systemDefault())
-                                      .toLocalDateTime();
-        return localDate;
+        LocalDateTime date = LocalDateTime.now();
+        Random r = new Random();
+        date.plusYears(r.nextInt(3));
+        date.plusMonths(r.nextInt(12));
+        date.plusDays(r.nextInt(31));
+        return date;
     }
 
 }

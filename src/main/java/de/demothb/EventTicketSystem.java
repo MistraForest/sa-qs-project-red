@@ -1,5 +1,6 @@
 package de.demothb;
 
+import de.demothb.model.Event;
 import de.demothb.model.EventTicketModel;
 import de.demothb.model.EventTicketModelInterface;
 import de.demothb.presenter.EventTicketController;
@@ -10,6 +11,9 @@ import de.demothb.view.UI.EventTicketGUIWindow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class EventTicketSystem {
 
@@ -23,7 +27,19 @@ public class EventTicketSystem {
         view.subscribe(presenter);
         eventModel.subscribe(view);
         eventModel.loadEvents();
+        scheduleRandomEventGeneration(eventModel);
         return view;
+    }
+
+    private static void scheduleRandomEventGeneration(EventTicketModelInterface eventModel) {
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        Runnable runnableTask = () -> {
+            if (eventModel != null){
+                Event event = eventModel.addEvent();
+                System.out.println("Event generated: " + event.getName());
+            }
+        };
+        executorService.scheduleWithFixedDelay(runnableTask, 15, 600, TimeUnit.SECONDS);
     }
 
     /**

@@ -8,18 +8,13 @@ import de.demothb.view.UI.EventListUI.EventListUIModel;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.DateFormatter;
 import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -30,9 +25,7 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
     private final PropertyChangeSupport support;
 
     private JFormattedTextField eventNameField, dateField, availabilityField, quantityField, eventIdField;
-    //private NumberFormat quantityFormat;
     private DefaultFormatterFactory integerFormatterFactory;
-    private DateFormat dateFormat;
     private JLabel eventNameLabel, dateLabel, availabilityLabel, quantityLabel, eventIdLabel;
     private JButton purchaseButton;
     private EventListUIModel listUIModel;
@@ -64,7 +57,6 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
     }
 
     private void initializeDateTextField() {
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
         dateField = new JFormattedTextField();
         dateField.setFormatterFactory(integerFormatterFactory);
         dateField.setColumns(15);
@@ -123,7 +115,6 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
                         // Fire Purchase Event
                         Integer quantity = ((Integer) quantityField.getValue());
                         if (currentEvent != null && quantity.intValue() > 0) {
-                            System.out.println("event fired");
                             support.firePropertyChange(
                                     new PropertyChangeEvent(
                                             currentEvent,
@@ -187,8 +178,6 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
         add(listPane, BorderLayout.LINE_START);
         add(labelPane, BorderLayout.CENTER);
         add(fieldPane, BorderLayout.LINE_END);
-        //setPreferredSize((new Dimension(600, 400)));
-        //setContentPane(mainPane);
     }
 
     @Override
@@ -203,23 +192,6 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
     }
 
     @Override
-    public void clearEventSelection() {
-        currentEvent = null;
-        eventListBox.clearSelection();
-        handleAvailabilityChanged();
-    }
-
-    @Override
-    public void highlightAvailability(String color) {
-        availabilityField.setForeground(Color.getColor(color));
-    }
-
-    @Override
-    public void clearAvailabilityHighlighting() {
-        availabilityField.setForeground(null);
-    }
-
-    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String propName = evt.getPropertyName();
         Object source = evt.getSource();
@@ -231,8 +203,6 @@ public class EventTicketGUIWindow extends JPanel implements EventTicketViewInter
             }
             if (propName.equals(PropertyChangeConstants.NEW_EVENT_ADDED.geName())) {
                 listUIModel.addElement((Event) evt.getSource());
-                //Make the new item it visible within the viewport of the window.
-                eventListBox.ensureIndexIsVisible(listUIModel.getSize());
                 return;
             }
         }

@@ -2,8 +2,6 @@ package de.demothb.util;
 
 public enum PropertyChangeConstants {
 
-    EVENT_SELECTED("eventSelected"),
-    QUANTITY_CHANGED("ticketQuantityChanged"),
     PURCHASE_TICKET("purchaseTicket"),
     EVENT_AVAILABILITY("availabilityChanged"),
     EVENT_LIST("newEventAdded"),

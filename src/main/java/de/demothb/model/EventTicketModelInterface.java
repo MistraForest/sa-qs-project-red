@@ -8,4 +8,6 @@ public interface EventTicketModelInterface extends Observable {
 
     void loadEvents();
 
+    Event addEvent();
+
 }
